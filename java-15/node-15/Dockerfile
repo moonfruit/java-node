@@ -1,4 +1,4 @@
-FROM dkmoonfruit/java-node:maven-latest
+FROM dkmoonfruit/maven:3-jdk-15
 
 RUN curl -sL https://deb.nodesource.com/setup_15.x | bash -
 RUN curl -sL https://dl.yarnpkg.com/debian/pubkey.gpg | apt-key add -
