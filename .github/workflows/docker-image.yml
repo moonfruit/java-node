@@ -172,7 +172,7 @@ jobs:
         uses: docker/build-push-action@v2
         with:
           push: true
-          file: maven/java-15/Dockerfile
+          file: ./maven/java-15/Dockerfile
           tags: dkmoonfruit/maven:3-jdk-15
 
   maven-16:
@@ -192,7 +192,7 @@ jobs:
         uses: docker/build-push-action@v2
         with:
           push: true
-          file: maven/java-16/Dockerfile
+          file: ./maven/java-16/Dockerfile
           tags: |
             dkmoonfruit/maven:3-jdk-16
             dkmoonfruit/maven:latest
