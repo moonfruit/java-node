@@ -18,10 +18,26 @@ jobs:
           username: ${{ secrets.DOCKER_HUB_USERNAME }}
           password: ${{ secrets.DOCKER_HUB_ACCESS_TOKEN }}
 
-      - name: Build and push
-        id: docker_build
+      - name: Build java-8/node-10/Dockerfile
+        id: docker_build_java_8_node_10
         uses: docker/build-push-action@v2
         with:
           push: true
           file: java-8/node-10/Dockerfile
           tags: dkmoonfruit/java-node:java-8-node-10
+
+      - name: Build java-8/node-12/Dockerfile
+        id: docker_build_java_8_node_12
+        uses: docker/build-push-action@v2
+        with:
+          push: true
+          file: java-8/node-12/Dockerfile
+          tags: dkmoonfruit/java-node:java-8-node-12
+
+      - name: Build java-8/node-14/Dockerfile
+        id: docker_build_java_8_node_14
+        uses: docker/build-push-action@v2
+        with:
+          push: true
+          file: java-8/node-14/Dockerfile
+          tags: dkmoonfruit/java-node:java-8-node-14
