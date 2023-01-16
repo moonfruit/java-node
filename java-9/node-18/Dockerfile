@@ -1,5 +1,6 @@
 FROM maven:3-jdk-9
 
+RUN apt-key adv --keyserver keyserver.ubuntu.com --recv-keys 648ACFD622F3D138
 RUN curl -sL https://deb.nodesource.com/setup_18.x | bash -
 RUN apt-get update -qq && apt-get install -qq --no-install-recommends \
     nodejs \
