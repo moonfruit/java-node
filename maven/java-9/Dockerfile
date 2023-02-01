@@ -1,4 +1,4 @@
-FROM openjdk:17-jdk-buster
+FROM adoptopenjdk/openjdk9
 
 ARG MAVEN_VERSION=3.8.7
 ARG USER_HOME_DIR="/root"

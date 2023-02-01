@@ -1,4 +1,4 @@
-FROM maven:3-eclipse-temurin-8
+FROM maven:3-jdk-8
 
 RUN curl -sL https://deb.nodesource.com/setup_10.x | bash -
 RUN apt-get update -qq && apt-get install -qq --no-install-recommends \
