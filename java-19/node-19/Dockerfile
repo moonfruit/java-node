@@ -1,4 +1,4 @@
-FROM dkmoonfruit/maven:3-jdk-19
+FROM maven:3-eclipse-temurin-19
 
 RUN curl -sL https://deb.nodesource.com/setup_19.x | bash -
 RUN apt-get update -qq && apt-get install -qq --no-install-recommends \

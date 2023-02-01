@@ -1,4 +1,4 @@
-FROM dkmoonfruit/maven:3-jdk-17
+FROM maven:3-eclipse-temurin-17
 
 RUN curl -sL https://deb.nodesource.com/setup_18.x | bash -
 RUN apt-get update -qq && apt-get install -qq --no-install-recommends \
