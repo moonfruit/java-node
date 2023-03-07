@@ -1,9 +1,7 @@
 FROM dkmoonfruit/maven:3-openjdk-9
 
-RUN rm -rf /var/lib/apt/lists/* && apt-get clean && apt-get update
-
 RUN curl -sL https://deb.nodesource.com/setup_18.x | bash -
-RUN apt-get update -qq && apt-get install -qq --no-install-recommends \
+RUN apt-get install -qq --no-install-recommends \
     nodejs \
     && rm -rf /var/lib/apt/lists/*
 
