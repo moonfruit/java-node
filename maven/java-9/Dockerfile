@@ -1,5 +1,9 @@
 FROM adoptopenjdk/openjdk9
 
+RUN apt-get update -qq && apt-get install -qq --no-install-recommends \
+    libc6 \
+    && rm -rf /var/lib/apt/lists/*
+
 ARG MAVEN_VERSION=3.9.1
 ARG USER_HOME_DIR="/root"
 ARG SHA=d3be5956712d1c2cf7a6e4c3a2db1841aa971c6097c7a67f59493a5873ccf8c8b889cf988e4e9801390a2b1ae5a0669de07673acb090a083232dbd3faf82f3e3
