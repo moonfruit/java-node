@@ -26,6 +26,8 @@ jobs:
         uses: docker/build-push-action@v4
         with:
           push: true
+          cache-from: type=gha
+          cache-to: type=gha,mode=max
           file: java-8/node-14/Dockerfile
           tags: dkmoonfruit/java-node:java-8-node-14
 
@@ -46,6 +48,8 @@ jobs:
         uses: docker/build-push-action@v4
         with:
           push: true
+          cache-from: type=gha
+          cache-to: type=gha,mode=max
           file: java-8/node-16/Dockerfile
           tags: dkmoonfruit/java-node:java-8-node-16
 
@@ -66,6 +70,8 @@ jobs:
         uses: docker/build-push-action@v4
         with:
           push: true
+          cache-from: type=gha
+          cache-to: type=gha,mode=max
           file: java-8/node-18/Dockerfile
           tags: dkmoonfruit/java-node:java-8-node-18
 
@@ -87,6 +93,8 @@ jobs:
         uses: docker/build-push-action@v4
         with:
           push: true
+          cache-from: type=gha
+          cache-to: type=gha,mode=max
           file: java-9/node-16/Dockerfile
           tags: dkmoonfruit/java-node:java-9-node-16
 
@@ -107,6 +115,8 @@ jobs:
         uses: docker/build-push-action@v4
         with:
           push: true
+          cache-from: type=gha
+          cache-to: type=gha,mode=max
           file: java-11/node-14/Dockerfile
           tags: dkmoonfruit/java-node:java-11-node-14
 
@@ -127,6 +137,8 @@ jobs:
         uses: docker/build-push-action@v4
         with:
           push: true
+          cache-from: type=gha
+          cache-to: type=gha,mode=max
           file: java-11/node-16/Dockerfile
           tags: dkmoonfruit/java-node:java-11-node-16
 
@@ -147,6 +159,8 @@ jobs:
         uses: docker/build-push-action@v4
         with:
           push: true
+          cache-from: type=gha
+          cache-to: type=gha,mode=max
           file: java-11/node-18/Dockerfile
           tags: dkmoonfruit/java-node:java-11-node-18
 
@@ -167,6 +181,8 @@ jobs:
         uses: docker/build-push-action@v4
         with:
           push: true
+          cache-from: type=gha
+          cache-to: type=gha,mode=max
           file: java-17/node-16/Dockerfile
           tags: dkmoonfruit/java-node:java-17-node-16
 
@@ -187,6 +203,8 @@ jobs:
         uses: docker/build-push-action@v4
         with:
           push: true
+          cache-from: type=gha
+          cache-to: type=gha,mode=max
           file: java-17/node-18/Dockerfile
           tags: |
             dkmoonfruit/java-node:java-17-node-18
@@ -209,6 +227,8 @@ jobs:
         uses: docker/build-push-action@v4
         with:
           push: true
+          cache-from: type=gha
+          cache-to: type=gha,mode=max
           file: java-19/node-19/Dockerfile
           tags: |
             dkmoonfruit/java-node:java-19-node-19
@@ -234,5 +254,7 @@ jobs:
         uses: docker/build-push-action@v4
         with:
           push: true
+          cache-from: type=gha
+          cache-to: type=gha,mode=max
           context: ./maven/java-9
           tags: dkmoonfruit/maven:3-openjdk-9
