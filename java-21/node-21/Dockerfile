@@ -1,6 +1,6 @@
 FROM maven:3-eclipse-temurin-21
 
-RUN curl -sL https://deb.nodesource.com/setup_21.x | bash -
+RUN curl -sL https://deb.nodesource.com/nsolid_setup_deb.sh | bash -s 21
 RUN apt-get update -qq && apt-get install -qq --no-install-recommends \
     nodejs \
     && rm -rf /var/lib/apt/lists/*
