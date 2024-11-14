@@ -20,7 +20,7 @@ jobs:
       NODE_VERSION: ${{ matrix.node-version }}
     secrets: inherit
 
-  build-newer-images:
+  build-more-images:
     needs: build-base-images
     strategy:
       matrix:

@@ -20,6 +20,9 @@ jobs:
   build-image:
     runs-on: ubuntu-latest
     steps:
+      - name: Set up QEMU
+        uses: docker/setup-qemu-action@v3
+
       - name: Setup Docker Buildx
         uses: docker/setup-buildx-action@v3
 
@@ -29,12 +32,12 @@ jobs:
           username: ${{ vars.DOCKERHUB_USERNAME }}
           password: ${{ secrets.DOCKERHUB_TOKEN }}
 
-      - name: Process TAG
+      - name: Generate TAG
         if: ${{ inputs.TAG != '' }}
         run: |
           echo "TAG=${{ vars.DOCKERHUB_USERNAME }}/java-node:${{ inputs.TAG }}" >> $GITHUB_ENV
 
-      - name: Build and Push image
+      - name: Build and Push
         uses: docker/build-push-action@v6
         with:
           build-args: |
