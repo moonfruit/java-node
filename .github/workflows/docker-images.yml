@@ -11,9 +11,13 @@ on:
 jobs:
   build-lts:
     uses: ./.github/workflows/build-lts.yml
+    strategy:
+      matrix:
+        java-version: [8, 11, 17, 21, 23]
+        node-version: [18, 20, 22]
     with:
-      JAVA_VERSION: 8
-      NODE_VERSION: 18
+      JAVA_VERSION: ${{ matrix.java-version }}
+      NODE_VERSION: ${{ matrix.node-version }}
     secrets: inherit
 
   # java-23-node-23:
