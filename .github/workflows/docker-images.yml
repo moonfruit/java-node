@@ -9,11 +9,23 @@ on:
   workflow_dispatch:
 
 jobs:
-  build-images:
+  build-base-images:
     strategy:
       matrix:
         java-version: [8, 11, 17, 21, 23]
-        node-version: [18, 20, 22]
+        node-version: [18]
+    uses: ./.github/workflows/build-image.yml
+    with:
+      JAVA_VERSION: ${{ matrix.java-version }}
+      NODE_VERSION: ${{ matrix.node-version }}
+    secrets: inherit
+
+  build-newer-images:
+    needs: build-base-images
+    strategy:
+      matrix:
+        java-version: [8, 11, 17, 21, 23]
+        node-version: [20, 22]
         exclude:
           - java-version: 21
             node-version: 22
@@ -24,6 +36,7 @@ jobs:
     secrets: inherit
 
   build-lts-image:
+    needs: build-base-images
     uses: ./.github/workflows/build-image.yml
     with:
       JAVA_VERSION: 21
@@ -32,6 +45,7 @@ jobs:
     secrets: inherit
 
   build-latest-image:
+    needs: build-base-images
     uses: ./.github/workflows/build-image.yml
     with:
       JAVA_VERSION: 23
