@@ -14,10 +14,21 @@ jobs:
       matrix:
         java-version: [8, 11, 17, 21, 23]
         node-version: [18, 20, 22]
+        exclude:
+          - java-version: 21
+            node-version: 22
     uses: ./.github/workflows/build-image.yml
     with:
       JAVA_VERSION: ${{ matrix.java-version }}
       NODE_VERSION: ${{ matrix.node-version }}
+    secrets: inherit
+
+  build-lts-image:
+    uses: ./.github/workflows/build-image.yml
+    with:
+      JAVA_VERSION: 21
+      NODE_VERSION: 22
+      TAG: lts
     secrets: inherit
 
   build-latest-image:
@@ -25,4 +36,5 @@ jobs:
     with:
       JAVA_VERSION: 23
       NODE_VERSION: 23
+      TAG: latest
     secrets: inherit
