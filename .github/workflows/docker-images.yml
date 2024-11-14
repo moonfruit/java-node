@@ -13,49 +13,16 @@ jobs:
     strategy:
       matrix:
         java-version: [8, 11, 17, 21, 23]
-        node-version: [18, 20, 22, 23]
-    name: java-${{ matrix.java-version }}-node-${{ matrix.node-version }}
-    runs-on: ubuntu-latest
-    steps:
-      - name: Setup Docker Buildx
-        uses: docker/setup-buildx-action@v3
+        node-version: [18, 20, 22]
+    uses: ../.github/workflows/build-image.yml
+    with:
+      JAVA_VERSION: ${{ matrix.java-version }}
+      NODE_VERSION: ${{ matrix.node-version }}
+    secrets: inherit
 
-      - name: Login to DockerHub
-        uses: docker/login-action@v3
-        with:
-          username: ${{ vars.DOCKERHUB_USERNAME }}
-          password: ${{ secrets.DOCKERHUB_TOKEN }}
-
-      - name: Build and Push image
-        uses: docker/build-push-action@v6
-        with:
-          build-args: |
-            JAVA_MAJOR_VERSION=${{ matrix.java-version }}
-            NODE_MAJOR_VERSION=${{ matrix.node-version }}
-          cache-from: type=gha
-          cache-to: type=gha,mode=max
-          platforms: linux/amd64,linux/arm64
-          push: true
-          tags: ${{ vars.DOCKERHUB_USERNAME }}/java-node:java-${{ matrix.java-version }}-node-${{ matrix.node-version }}
-
-  tag-latest-image:
-    needs: java-23-node-23
-    runs-on: ubuntu-latest
-    steps:
-      - name: Setup Docker Buildx
-        uses: docker/setup-buildx-action@v3
-
-      - name: Login to DockerHub
-        uses: docker/login-action@v3
-        with:
-          username: ${{ vars.DOCKERHUB_USERNAME }}
-          password: ${{ secrets.DOCKERHUB_TOKEN }}
-
-      - name: Push image
-        uses: docker/build-push-action@v6
-        with:
-          cache-from: type=gha
-          platforms: linux/amd64,linux/arm64
-          pull: ${{ vars.DOCKERHUB_USERNAME }}/java-node:java-23-node-23
-          push: true
-          tags: ${{ vars.DOCKERHUB_USERNAME }}/java-node:latest
+  build-latest-image:
+    uses: ../.github/workflows/build-image.yml
+    with:
+      JAVA_VERSION: 23
+      NODE_VERSION: 23
+    secrets: inherit
