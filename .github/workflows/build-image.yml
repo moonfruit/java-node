@@ -12,9 +12,6 @@ on:
       TAG:
         required: false
         type: string
-    variables:
-      DOCKERHUB_USERNAME:
-        required: true
     secrets:
       DOCKERHUB_TOKEN:
         required: true
