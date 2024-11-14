@@ -12,8 +12,9 @@ jobs:
   build-lts:
     uses: ./.github/workflows/build-lts.yml
     with:
-      java_version: 8
-      node_version: 18
+      JAVA_VERSION: 8
+      NODE_VERSION: 18
+    secrets: inherit
 
   java-23-node-23:
     runs-on: ubuntu-latest

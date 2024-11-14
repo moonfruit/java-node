@@ -3,12 +3,17 @@ name: Build Java with Node LTS image
 on:
   workflow_call:
     inputs:
-      java_version:
+      JAVA_VERSION:
         required: true
         type: string
-      node_version:
+      NODE_VERSION:
         required: true
         type: string
+    secrets:
+      DOCKER_HUB_USERNAME:
+        required: true
+      DOCKER_HUB_ACCESS_TOKEN:
+        required: true
 
 jobs:
   build-lts:
@@ -30,6 +35,6 @@ jobs:
           push: true
           file: lts/Dockerfile
           build-args: |
-            JAVA_VERSION=${{ inputs.java_version }}
-            NODE_VERSION=${{ inputs.node_version }}
-          tags: dkmoonfruit/java-node:java-${{ inputs.java_version }}-node-${{ inputs.node_version }}
+            JAVA_VERSION=${{ inputs.JAVA_VERSION }}
+            NODE_VERSION=${{ inputs.NODE_VERSION }}
+          tags: dkmoonfruit/java-node:java-${{ inputs.JAVA_VERSION }}-node-${{ inputs.NODE_VERSION }}
