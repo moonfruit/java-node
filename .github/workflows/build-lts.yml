@@ -35,6 +35,6 @@ jobs:
           push: true
           file: lts/Dockerfile
           build-args: |
-            JAVA_VERSION=${{ inputs.JAVA_VERSION }}
-            NODE_VERSION=${{ inputs.NODE_VERSION }}
+            JAVA_MAJOR_VERSION=${{ inputs.JAVA_VERSION }}
+            NODE_MAJOR_VERSION=${{ inputs.NODE_VERSION }}
           tags: dkmoonfruit/java-node:java-${{ inputs.JAVA_VERSION }}-node-${{ inputs.NODE_VERSION }}

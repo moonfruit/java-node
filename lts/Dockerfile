@@ -1,12 +1,12 @@
-ARG JAVA_VERSION=21
-ARG NODE_VERSION=22
+ARG JAVA_MAJOR_VERSION=21
+ARG NODE_MAJOR_VERSION=22
 
-FROM maven:3-eclipse-temurin-${JAVA_VERSION}
+FROM maven:3-eclipse-temurin-${JAVA_MAJOR_VERSION}
 
-RUN echo "JAVA_VERSION=${JAVA_VERSION}" && \
-    echo "NODE_VERSION=${NODE_VERSION}"
+RUN echo "JAVA_MAJOR_VERSION=${JAVA_MAJOR_VERSION}" && \
+    echo "NODE_MAJOR_VERSION=${NODE_MAJOR_VERSION}"
 
-RUN curl -sL "https://deb.nodesource.com/setup_${NODE_VERSION}.x" | bash -
+RUN curl -sL "https://deb.nodesource.com/setup_${NODE_MAJOR_VERSION}.x" | bash -
 RUN apt-get update -qq && apt-get install -qq --no-install-recommends \
     nodejs \
     && rm -rf /var/lib/apt/lists/*
