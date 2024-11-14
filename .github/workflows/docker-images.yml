@@ -9,7 +9,7 @@ on:
   workflow_dispatch:
 
 jobs:
-  build-image:
+  build-images:
     strategy:
       matrix:
         java-version: [8, 11, 17, 21, 23]
