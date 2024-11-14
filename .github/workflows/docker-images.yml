@@ -49,9 +49,8 @@ jobs:
           file: java-8/node-18/Dockerfile
           tags: dkmoonfruit/java-node:java-8-node-18
 
-  java-9-node-16:
+  java-8-node-20:
     runs-on: ubuntu-latest
-    needs: maven-9
     steps:
       - name: Setup Docker Buildx
         uses: docker/setup-buildx-action@v3
@@ -67,8 +66,28 @@ jobs:
         uses: docker/build-push-action@v5
         with:
           push: true
-          file: java-9/node-16/Dockerfile
-          tags: dkmoonfruit/java-node:java-9-node-16
+          file: java-8/node-20/Dockerfile
+          tags: dkmoonfruit/java-node:java-8-node-20
+
+  java-8-node-22:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Setup Docker Buildx
+        uses: docker/setup-buildx-action@v3
+
+      - name: Login to DockerHub
+        uses: docker/login-action@v3
+        with:
+          username: ${{ secrets.DOCKER_HUB_USERNAME }}
+          password: ${{ secrets.DOCKER_HUB_ACCESS_TOKEN }}
+
+      - name: Build and Push
+        id: docker_build
+        uses: docker/build-push-action@v5
+        with:
+          push: true
+          file: java-8/node-22/Dockerfile
+          tags: dkmoonfruit/java-node:java-8-node-22
 
   java-11-node-16:
     runs-on: ubuntu-latest
@@ -109,6 +128,46 @@ jobs:
           push: true
           file: java-11/node-18/Dockerfile
           tags: dkmoonfruit/java-node:java-11-node-18
+
+  java-11-node-20:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Setup Docker Buildx
+        uses: docker/setup-buildx-action@v3
+
+      - name: Login to DockerHub
+        uses: docker/login-action@v3
+        with:
+          username: ${{ secrets.DOCKER_HUB_USERNAME }}
+          password: ${{ secrets.DOCKER_HUB_ACCESS_TOKEN }}
+
+      - name: Build and Push
+        id: docker_build
+        uses: docker/build-push-action@v5
+        with:
+          push: true
+          file: java-11/node-20/Dockerfile
+          tags: dkmoonfruit/java-node:java-11-node-20
+
+  java-11-node-22:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Setup Docker Buildx
+        uses: docker/setup-buildx-action@v3
+
+      - name: Login to DockerHub
+        uses: docker/login-action@v3
+        with:
+          username: ${{ secrets.DOCKER_HUB_USERNAME }}
+          password: ${{ secrets.DOCKER_HUB_ACCESS_TOKEN }}
+
+      - name: Build and Push
+        id: docker_build
+        uses: docker/build-push-action@v5
+        with:
+          push: true
+          file: java-11/node-22/Dockerfile
+          tags: dkmoonfruit/java-node:java-11-node-22
 
   java-17-node-16:
     runs-on: ubuntu-latest
@@ -170,6 +229,26 @@ jobs:
           file: java-17/node-20/Dockerfile
           tags: dkmoonfruit/java-node:java-17-node-20
 
+  java-17-node-22:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Setup Docker Buildx
+        uses: docker/setup-buildx-action@v3
+
+      - name: Login to DockerHub
+        uses: docker/login-action@v3
+        with:
+          username: ${{ secrets.DOCKER_HUB_USERNAME }}
+          password: ${{ secrets.DOCKER_HUB_ACCESS_TOKEN }}
+
+      - name: Build and Push
+        id: docker_build
+        uses: docker/build-push-action@v5
+        with:
+          push: true
+          file: java-17/node-22/Dockerfile
+          tags: dkmoonfruit/java-node:java-17-node-22
+
   java-21-node-20:
     runs-on: ubuntu-latest
     steps:
@@ -188,11 +267,31 @@ jobs:
         with:
           push: true
           file: java-21/node-20/Dockerfile
+          tags: dkmoonfruit/java-node:java-21-node-20
+
+  java-21-node-22:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Setup Docker Buildx
+        uses: docker/setup-buildx-action@v3
+
+      - name: Login to DockerHub
+        uses: docker/login-action@v3
+        with:
+          username: ${{ secrets.DOCKER_HUB_USERNAME }}
+          password: ${{ secrets.DOCKER_HUB_ACCESS_TOKEN }}
+
+      - name: Build and Push
+        id: docker_build
+        uses: docker/build-push-action@v5
+        with:
+          push: true
+          file: java-21/node-22/Dockerfile
           tags: |
-            dkmoonfruit/java-node:java-21-node-20
+            dkmoonfruit/java-node:java-21-node-22
             dkmoonfruit/java-node:lts
 
-  java-22-node-20:
+  java-23-node-22:
     runs-on: ubuntu-latest
     steps:
       - name: Setup Docker Buildx
@@ -209,10 +308,10 @@ jobs:
         uses: docker/build-push-action@v5
         with:
           push: true
-          file: java-22/node-20/Dockerfile
-          tags: dkmoonfruit/java-node:java-22-node-20
+          file: java-23/node-22/Dockerfile
+          tags: dkmoonfruit/java-node:java-23-node-22
 
-  java-22-node-21:
+  java-23-node-23:
     runs-on: ubuntu-latest
     steps:
       - name: Setup Docker Buildx
@@ -229,30 +328,7 @@ jobs:
         uses: docker/build-push-action@v5
         with:
           push: true
-          file: java-22/node-21/Dockerfile
+          file: java-23/node-23/Dockerfile
           tags: |
-            dkmoonfruit/java-node:java-22-node-21
+            dkmoonfruit/java-node:java-23-node-23
             dkmoonfruit/java-node:latest
-
-  maven-9:
-    runs-on: ubuntu-latest
-    steps:
-      - name: Checkout
-        uses: actions/checkout@v4
-
-      - name: Setup Docker Buildx
-        uses: docker/setup-buildx-action@v3
-
-      - name: Login to DockerHub
-        uses: docker/login-action@v3
-        with:
-          username: ${{ secrets.DOCKER_HUB_USERNAME }}
-          password: ${{ secrets.DOCKER_HUB_ACCESS_TOKEN }}
-
-      - name: Build and Push
-        id: docker_build
-        uses: docker/build-push-action@v5
-        with:
-          push: true
-          context: ./maven/java-9
-          tags: dkmoonfruit/maven:3-openjdk-9
