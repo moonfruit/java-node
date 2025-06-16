@@ -12,20 +12,29 @@ jobs:
   preflight:
     runs-on: ubuntu-latest
     outputs:
-      caches: ${{ steps.set-matrix.outputs.caches }}
-      images: ${{ steps.set-matrix.outputs.images }}
+      build: ${{ steps.preflight.outputs.build }}
+      caches: ${{ steps.preflight.outputs.caches }}
+      images: ${{ steps.preflight.outputs.images }}
     steps:
       - name: Checkout
         uses: actions/checkout@v4
       - name: Preflight
-        id: set-matrix
+        id: preflight
         run: |
           IMAGES=$(bin/preflight.sh)
           CACHES=$(echo "$IMAGES" | jq '. | {java}')
+          if [[ -z "$(git status --porcelain)" ]]; then
+            echo "No changes detected, skipping build."
+            echo "build=false" >>$GITHUB_OUTPUT
+          else
+            echo "Changes detected, proceeding with build."
+            echo "build=true" >>$GITHUB_OUTPUT
+          fi
           bin/output.sh caches "$CACHES" >>$GITHUB_OUTPUT
           bin/output.sh images "$IMAGES" >>$GITHUB_OUTPUT
           cat "$GITHUB_OUTPUT"
       - name: Upload artifacts
+        if: steps.preflight.outputs.build == 'true'
         uses: actions/upload-artifact@v4
         with:
           name: preflight
@@ -34,6 +43,7 @@ jobs:
 
   build-caches:
     needs: preflight
+    if: needs.preflight.outputs.build == 'true'
     strategy:
       matrix: ${{ fromJson(needs.preflight.outputs.caches) }}
     uses: ./.github/workflows/build-cache.yml
@@ -44,6 +54,7 @@ jobs:
     needs:
       - preflight
       - build-caches
+    if: needs.preflight.outputs.build == 'true'
     strategy:
       matrix: ${{ fromJson(needs.preflight.outputs.images) }}
     uses: ./.github/workflows/build-image.yml
@@ -54,7 +65,10 @@ jobs:
     secrets: inherit
 
   save-preflight:
-    needs: build-images
+    needs:
+      - preflight
+      - build-images
+    if: needs.preflight.outputs.build == 'true'
     runs-on: ubuntu-latest
     steps:
       - name: Checkout
