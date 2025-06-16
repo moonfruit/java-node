@@ -26,8 +26,8 @@ jobs:
         run: |
           IMAGES=$(bin/preflight.sh)
           CACHES=$(echo "$IMAGES" | jq '. | {java}')
-          echo "caches=$CACHES" >> $GITHUB_OUTPUT
-          echo "images=$IMAGES" >> $GITHUB_OUTPUT
+          bin/output.sh caches "$CACHES" >>$GITHUB_OUTPUT
+          bin/output.sh images "$IMAGES" >>$GITHUB_OUTPUT
           cat "$GITHUB_OUTPUT"
 
   build-caches:
