@@ -31,14 +31,15 @@ jobs:
   build-caches:
     needs: preflight
     strategy:
-      matrix: {{ fromJson(needs.preflight.outputs.caches) }}
+      matrix: ${{ fromJson(needs.preflight.outputs.caches) }}
     uses: ./.github/workflows/build-cache.yml
     with:
       JAVA_VERSION: ${{ matrix.java }}
 
   build-images:
+    needs: build-caches
     strategy:
-      matrix: {{ fromJson(needs.preflight.outputs.images) }}
+      matrix: ${{ fromJson(needs.preflight.outputs.images) }}
     uses: ./.github/workflows/build-image.yml
     with:
       JAVA_VERSION: ${{ matrix.java }}
