@@ -67,6 +67,8 @@ jobs:
           path: preflight
       - name: Commit and Push
         run: |
-          ls -l
+          git config user.name 'github-actions[bot]'
+          git config user.email 'github-actions[bot]@users.noreply.github.com'
           git add preflight
+          git status
           git commit -m "Update preflight" && git push || echo "No changes to commit"
