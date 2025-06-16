@@ -39,7 +39,9 @@ jobs:
       JAVA_VERSION: ${{ matrix.java }}
 
   build-images:
-    needs: build-caches
+    needs:
+      - preflight
+      - build-caches
     strategy:
       matrix: ${{ fromJson(needs.preflight.outputs.images) }}
     uses: ./.github/workflows/build-image.yml
