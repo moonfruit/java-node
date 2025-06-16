@@ -15,10 +15,6 @@ jobs:
       caches: ${{ steps.set-matrix.outputs.caches }}
       images: ${{ steps.set-matrix.outputs.images }}
     steps:
-      - name: Setup
-        run: |
-          sudo apt-get update
-          sudo apt-get install jq
       - name: Checkout
         uses: actions/checkout@v4
       - name: Preflight
@@ -68,6 +64,7 @@ jobs:
         uses: actions/download-artifact@v4
         with:
           name: preflight
+          path: preflight
       - name: Commit and Push
         run: |
           ls -l
