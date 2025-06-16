@@ -22,7 +22,7 @@ jobs:
       - name: Run preflight
         id: set-matrix
         run: |
-          IMAGES=$(bin/preflight.sh)
+          IMAGES=$(./bin/preflight.sh)
           CACHES=$(echo "$IMAGES" | jq '. | {java}')
           echo "caches=$CACHES" >> $GITHUB_OUTPUT
           echo "images=$IMAGES" >> $GITHUB_OUTPUT
