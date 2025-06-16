@@ -36,29 +36,30 @@ jobs:
           path: preflight
           retention-days: 1
 
-  build-caches:
-    needs: preflight
-    strategy:
-      matrix: ${{ fromJson(needs.preflight.outputs.caches) }}
-    uses: ./.github/workflows/build-cache.yml
-    with:
-      JAVA_VERSION: ${{ matrix.java }}
+  # build-caches:
+  #   needs: preflight
+  #   strategy:
+  #     matrix: ${{ fromJson(needs.preflight.outputs.caches) }}
+  #   uses: ./.github/workflows/build-cache.yml
+  #   with:
+  #     JAVA_VERSION: ${{ matrix.java }}
 
-  build-images:
-    needs:
-      - preflight
-      - build-caches
-    strategy:
-      matrix: ${{ fromJson(needs.preflight.outputs.images) }}
-    uses: ./.github/workflows/build-image.yml
-    with:
-      JAVA_VERSION: ${{ matrix.java }}
-      NODE_VERSION: ${{ matrix.node }}
-      TAG: ${{ matrix.tag }}
-    secrets: inherit
+  # build-images:
+  #   needs:
+  #     - preflight
+  #     - build-caches
+  #   strategy:
+  #     matrix: ${{ fromJson(needs.preflight.outputs.images) }}
+  #   uses: ./.github/workflows/build-image.yml
+  #   with:
+  #     JAVA_VERSION: ${{ matrix.java }}
+  #     NODE_VERSION: ${{ matrix.node }}
+  #     TAG: ${{ matrix.tag }}
+  #   secrets: inherit
 
   save-preflight:
-    needs: build-images
+    # needs: build-images
+    needs: preflight
     runs-on: ubuntu-latest
     steps:
       - name: Checkout
@@ -69,5 +70,6 @@ jobs:
           name: preflight
       - name: Commit and Push
         run: |
+          ls -l
           git add preflight
           git commit -m "Update preflight" && git push || echo "No changes to commit"
