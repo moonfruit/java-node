@@ -52,11 +52,11 @@ contains() {
 
 # KNOWN_JAVA=(8 11 17 21 24)
 # KNOWN_NODE=(16 18 20 22 24)
-KNOWN_JAVA=(21)
+KNOWN_JAVA=(17 21 24)
 KNOWN_NODE=(22)
 
 if check-yarn >&2; then
-    echo "yarn@1 is changed" >&2;
+    echo "yarn@1 is changed">&2;
     declare -n JAVA=KNOWN_JAVA
     declare -n NODE=KNOWN_NODE
 

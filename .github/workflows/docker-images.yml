@@ -29,6 +29,12 @@ jobs:
           bin/output.sh caches "$CACHES" >>$GITHUB_OUTPUT
           bin/output.sh images "$IMAGES" >>$GITHUB_OUTPUT
           cat "$GITHUB_OUTPUT"
+      - name: Upload artifacts
+        uses: actions/upload-artifact@v4
+        with:
+          name: preflight
+          path: preflight
+          retention-days: 1
 
   build-caches:
     needs: preflight
@@ -50,3 +56,18 @@ jobs:
       NODE_VERSION: ${{ matrix.node }}
       TAG: ${{ matrix.tag }}
     secrets: inherit
+
+  save-preflight:
+    needs: build-images
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+      - name: Download artifacts
+        uses: actions/download-artifact@v4
+        with:
+          name: preflight
+      - name: Commit and Push
+        run: |
+          git add preflight
+          git commit -m "Update preflight" && git push || echo "No changes to commit"
