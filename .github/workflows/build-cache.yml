@@ -1,0 +1,28 @@
+name: Build Java image cache
+
+on:
+  workflow_call:
+    inputs:
+      JAVA_VERSION:
+        required: true
+        type: string
+
+jobs:
+  build-image:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Set up QEMU
+        uses: docker/setup-qemu-action@v3
+
+      - name: Setup Docker Buildx
+        uses: docker/setup-buildx-action@v3
+
+      - name: Build and Push
+        uses: docker/build-push-action@v6
+        with:
+          build-args: |
+            JAVA_VERSION=${{ inputs.JAVA_VERSION }}
+          cache-to: type=gha,scope=java-${{ inputs.JAVA_VERSION }},mode=max
+          platforms: linux/amd64,linux/arm64
+          target: base
+          push: false

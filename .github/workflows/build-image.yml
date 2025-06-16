@@ -44,7 +44,6 @@ jobs:
             JAVA_VERSION=${{ inputs.JAVA_VERSION }}
             NODE_VERSION=${{ inputs.NODE_VERSION }}
           cache-from: type=gha,scope=java-${{ inputs.JAVA_VERSION }}
-          cache-to: type=gha,scope=java-${{ inputs.JAVA_VERSION }},mode=max
           platforms: linux/amd64,linux/arm64
           push: true
           tags: |

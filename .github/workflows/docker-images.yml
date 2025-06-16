@@ -9,46 +9,39 @@ on:
   workflow_dispatch:
 
 jobs:
-  build-base-images:
+  preflight:
+    runs-on: ubuntu-latest
+    outputs:
+      caches: ${{ steps.set-matrix.outputs.caches }}
+      images: ${{ steps.set-matrix.outputs.images }}
+    steps:
+      - name: Setup environment
+        run: |
+          sudo apt-get update
+          sudo apt-get install jq
+      - name: Run preflight
+        id: set-matrix
+        run: |
+          IMAGES=$(bin/preflight.sh)
+          CACHES=$(echo "$IMAGES" | jq '. | {java}')
+          echo "caches=$CACHES" >> $GITHUB_OUTPUT
+          echo "images=$IMAGES" >> $GITHUB_OUTPUT
+          cat "$GITHUB_OUTPUT"
+
+  build-caches:
+    needs: preflight
     strategy:
-      matrix:
-        java-version: [8, 11, 17, 21, 23]
-        node-version: [18]
-    uses: ./.github/workflows/build-image.yml
+      matrix: {{ fromJson(needs.preflight.outputs.caches) }}
+    uses: ./.github/workflows/build-cache.yml
     with:
-      JAVA_VERSION: ${{ matrix.java-version }}
-      NODE_VERSION: ${{ matrix.node-version }}
-    secrets: inherit
+      JAVA_VERSION: ${{ matrix.java }}
 
-  build-more-images:
-    needs: build-base-images
+  build-images:
     strategy:
-      matrix:
-        java-version: [8, 11, 17, 21, 23]
-        node-version: [20, 22]
-        exclude:
-          - java-version: 21
-            node-version: 22
+      matrix: {{ fromJson(needs.preflight.outputs.images) }}
     uses: ./.github/workflows/build-image.yml
     with:
-      JAVA_VERSION: ${{ matrix.java-version }}
-      NODE_VERSION: ${{ matrix.node-version }}
-    secrets: inherit
-
-  build-lts-image:
-    needs: build-base-images
-    uses: ./.github/workflows/build-image.yml
-    with:
-      JAVA_VERSION: 21
-      NODE_VERSION: 22
-      TAG: lts
-    secrets: inherit
-
-  build-latest-image:
-    needs: build-base-images
-    uses: ./.github/workflows/build-image.yml
-    with:
-      JAVA_VERSION: 23
-      NODE_VERSION: 23
-      TAG: latest
+      JAVA_VERSION: ${{ matrix.java }}
+      NODE_VERSION: ${{ matrix.node }}
+      TAG: ${{ matrix.tag }}
     secrets: inherit
