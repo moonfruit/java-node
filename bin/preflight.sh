@@ -51,7 +51,7 @@ contains() {
 }
 
 KNOWN_JAVA=(8 11 17 21 24)
-KNOWN_NODE=(16 18 20 22 24)
+KNOWN_NODE=(18 20 22 24)
 
 if check-yarn >&2; then
     echo "yarn@1 is changed">&2;
