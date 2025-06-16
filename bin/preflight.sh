@@ -56,7 +56,7 @@ KNOWN_JAVA=(21)
 KNOWN_NODE=(22)
 
 if check-yarn >&2; then
-    echo "yarn@1 is changed"
+    echo "yarn@1 is changed" >&2;
     declare -n JAVA=KNOWN_JAVA
     declare -n NODE=KNOWN_NODE
 
@@ -65,7 +65,7 @@ else
     for version in "${KNOWN_JAVA[@]}"; do
         echo "--------" >&2
         if check-java "$version" >&2; then
-            echo "java@$version is changed"
+            echo "java@$version is changed" >&2;
             JAVA+=("$version")
         fi
     done
@@ -74,7 +74,7 @@ else
     for version in "${KNOWN_NODE[@]}"; do
         echo "--------" >&2
         if check-node "$version" >&2; then
-            echo "node@$version is changed"
+            echo "node@$version is changed" >&2;
             NODE+=("$version")
         fi
     done
