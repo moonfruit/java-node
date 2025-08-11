@@ -84,7 +84,7 @@ if contains 22 "${NODE[@]}"; then
         INCLUDE+=('{"java":21,"node":22,"tag":"lts"}')
     fi
     if contains 24 "${JAVA[@]}"; then
-        INCLUDE+=('{"java":24,"node":22,"tag":"latest"}')
+        INCLUDE+=('{"java":24,"node":24,"tag":"latest"}')
     fi
 fi
 
