@@ -23,9 +23,8 @@ TOKEN=$(curl -s \
     jq -r .token)
 
 # 请求 manifest 信息以获取 digest
-curl -sI \
+curl -fsSL \
     -H "Authorization: Bearer $TOKEN" \
     -H "Accept: application/vnd.docker.distribution.manifest.v2+json" \
     "https://registry-1.docker.io/v2/${REPO}/manifests/${TAG}" |
-    awk -F': ' 'BEGIN {IGNORECASE=1} /Docker-Content-Digest/ {print $2}' |
-    tr -d $'\r'
+    jq -r '.manifests[] | select(.platform.os == "linux" and .platform.architecture == "amd64") | .digest'
