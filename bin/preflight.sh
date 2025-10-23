@@ -68,14 +68,22 @@ else
         fi
     done
 
-    NODE=()
-    for version in "${KNOWN_NODE[@]}"; do
-        echo "--------" >&2
-        if check-node "$version" >&2; then
-            echo "node@$version is changed" >&2
-            NODE+=("$version")
+    if ((${#JAVA[@]})); then
+        declare -n NODE=KNOWN_NODE
+    else
+        NODE=()
+        for version in "${KNOWN_NODE[@]}"; do
+            echo "--------" >&2
+            if check-node "$version" >&2; then
+                echo "node@$version is changed" >&2
+                NODE+=("$version")
+            fi
+        done
+
+        if ((${#NODE[@]})); then
+            JAVA=("${KNOWN_JAVA[@]}")
         fi
-    done
+    fi
 fi
 
 INCLUDE=()
