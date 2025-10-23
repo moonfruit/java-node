@@ -50,11 +50,11 @@ contains() {
     return 1
 }
 
-KNOWN_JAVA=(8 11 17 21 24)
-KNOWN_NODE=(18 20 22 24)
+KNOWN_JAVA=(8 11 17 21 25)
+KNOWN_NODE=(18 20 22 24 25)
 
 if check-yarn >&2; then
-    echo "yarn@1 is changed">&2;
+    echo "yarn@1 is changed" >&2
     declare -n JAVA=KNOWN_JAVA
     declare -n NODE=KNOWN_NODE
 
@@ -63,7 +63,7 @@ else
     for version in "${KNOWN_JAVA[@]}"; do
         echo "--------" >&2
         if check-java "$version" >&2; then
-            echo "java@$version is changed" >&2;
+            echo "java@$version is changed" >&2
             JAVA+=("$version")
         fi
     done
@@ -72,20 +72,18 @@ else
     for version in "${KNOWN_NODE[@]}"; do
         echo "--------" >&2
         if check-node "$version" >&2; then
-            echo "node@$version is changed" >&2;
+            echo "node@$version is changed" >&2
             NODE+=("$version")
         fi
     done
 fi
 
 INCLUDE=()
-if contains 22 "${NODE[@]}"; then
-    if contains 21 "${JAVA[@]}"; then
-        INCLUDE+=('{"java":21,"node":22,"tag":"lts"}')
-    fi
-    if contains 24 "${JAVA[@]}"; then
-        INCLUDE+=('{"java":24,"node":24,"tag":"latest"}')
-    fi
+if contains 24 "${NODE[@]}" && contains 25 "${JAVA[@]}"; then
+    INCLUDE+=('{"java":25,"node":24,"tag":"lts"}')
+fi
+if contains 25 "${NODE[@]}" && contains 25 "${JAVA[@]}"; then
+    INCLUDE+=('{"java":25,"node":25,"tag":"latest"}')
 fi
 
 echo "--------" >&2
