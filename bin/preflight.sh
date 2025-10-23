@@ -79,10 +79,10 @@ else
 fi
 
 INCLUDE=()
-if contains 24 "${NODE[@]}" && contains 25 "${JAVA[@]}"; then
+if contains 25 "${JAVA[@]}" && contains 24 "${NODE[@]}"; then
     INCLUDE+=('{"java":25,"node":24,"tag":"lts"}')
 fi
-if contains 25 "${NODE[@]}" && contains 25 "${JAVA[@]}"; then
+if contains 25 "${JAVA[@]}" && contains 25 "${NODE[@]}"; then
     INCLUDE+=('{"java":25,"node":25,"tag":"latest"}')
 fi
 
