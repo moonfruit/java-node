@@ -1,7 +1,7 @@
 #!/usr/bin/env bash
 set -euo pipefail
 
-MAJOR="${1:-22}"
+MAJOR="${1:-24}"
 
 VERSION=$(curl -s https://nodejs.org/dist/index.json |
     jq -r '[.[] | select(.version | test("^v'"$MAJOR"'\\."))][0].version')

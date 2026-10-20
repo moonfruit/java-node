@@ -1,6 +1,6 @@
 # hadolint global ignore=DL3008
 
-ARG JAVA_VERSION=21
+ARG JAVA_VERSION=25
 FROM maven:3-eclipse-temurin-${JAVA_VERSION} AS base
 
 SHELL ["/bin/bash", "-o", "pipefail", "-c"]
@@ -12,7 +12,7 @@ RUN curl -sL https://dl.yarnpkg.com/debian/pubkey.gpg | apt-key add - && \
     rm -rf /var/lib/apt/lists/*
 
 FROM base AS final
-ARG NODE_VERSION=22
+ARG NODE_VERSION=24
 
 SHELL ["/bin/bash", "-o", "pipefail", "-c"]
 RUN curl -sL "https://deb.nodesource.com/setup_${NODE_VERSION}.x" | bash - && \

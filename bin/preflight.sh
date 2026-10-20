@@ -50,8 +50,9 @@ contains() {
     return 1
 }
 
-KNOWN_JAVA=(8 11 17 21 25)
-KNOWN_NODE=(18 20 22 24 25)
+# Supported LTS releases plus the latest GA release (reviewed 2026-10-20).
+KNOWN_JAVA=(8 11 17 21 25 27)
+KNOWN_NODE=(22 24 26)
 
 if check-yarn >&2; then
     echo "yarn@1 is changed" >&2
@@ -90,8 +91,8 @@ INCLUDE=()
 if contains 25 "${JAVA[@]}" && contains 24 "${NODE[@]}"; then
     INCLUDE+=('{"java":25,"node":24,"tag":"lts"}')
 fi
-if contains 25 "${JAVA[@]}" && contains 25 "${NODE[@]}"; then
-    INCLUDE+=('{"java":25,"node":25,"tag":"latest"}')
+if contains 27 "${JAVA[@]}" && contains 26 "${NODE[@]}"; then
+    INCLUDE+=('{"java":27,"node":26,"tag":"latest"}')
 fi
 
 echo "--------" >&2
